@@ -2,13 +2,15 @@ package ru.job4j.di;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 07.05.2020
+ * @version 2.0
+ * @since 08.05.2020
  */
 
+@Component
 public class Store {
     private List<String> data = new ArrayList<>();
 

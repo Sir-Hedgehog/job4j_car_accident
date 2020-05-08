@@ -1,11 +1,14 @@
 package ru.job4j.di;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 07.05.2020
+ * @version 2.0
+ * @since 08.05.2020
  */
 
+@Component
 public class StartUI {
     private Store store;
     private ConsoleInput input;
