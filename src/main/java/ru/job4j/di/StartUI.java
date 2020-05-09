@@ -1,22 +1,22 @@
 package ru.job4j.di;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 08.05.2020
+ * @version 3.0
+ * @since 09.05.2020
  */
 
 @Component
 public class StartUI {
-    private Store store;
-    private ConsoleInput input;
 
-    public StartUI(Store store, ConsoleInput input) {
-        this.store = store;
-        this.input = input;
-    }
+    @Autowired
+    private Store store;
+
+    @Autowired
+    private ConsoleInput input;
 
     /**
      * Метод добавляет значение в список
