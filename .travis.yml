@@ -8,9 +8,6 @@ sudo: false
 services:
 - postgresql
 
-before_install:
-- psql -c "CREATE DATABASE accident;" -U postgres
-
 # Отправлять уведомление на почту youremail@smtp.ru (изменить на свою), если сборка упала
 notifications:
   email:
