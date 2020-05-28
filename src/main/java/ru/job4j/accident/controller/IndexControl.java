@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
+ * @version 2.0
  * @since 28.05.2020
  */
 
