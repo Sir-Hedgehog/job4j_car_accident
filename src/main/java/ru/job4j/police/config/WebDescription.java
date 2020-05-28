@@ -21,7 +21,7 @@ public class WebDescription extends AbstractAnnotationConfigDispatcherServletIni
     }
 
     /**
-     * Метод формирует конфигурацию по визаульной части проекта
+     * Метод формирует конфигурацию по визуальной части проекта
      * @return - массив сущностей существующего проекта, отвечающих за визуализацию
      */
 
