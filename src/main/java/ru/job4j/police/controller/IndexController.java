@@ -19,7 +19,7 @@ public class IndexController {
     /**
      * Метод получает из валидационного блока список данных о правонарушениях и передает их на фронт
      * @param model - модель со списком данных (необходим для удобного парсинга)
-     * @return - список данных о правонарушениях
+     * @return - список данных о правонарушениях для jsp-файла (accidents.jsp)
      */
 
     @RequestMapping(value = "/accidents", method = RequestMethod.GET)
