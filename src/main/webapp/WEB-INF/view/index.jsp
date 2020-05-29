@@ -28,10 +28,10 @@
             <%--@elvariable id="events" type="java.util.List"--%>
             <c:forEach items="${events}" var="event">
                 <tr>
-                    <td><c:out value="${event[0]}"/></td>
-                    <td><c:out value="${event[1]}"/></td>
-                    <td><c:out value="${event[2]}"/></td>
-                    <td><c:out value="${event[3]}"/></td>
+                    <td><c:out value="${event.description}"/></td>
+                    <td><c:out value="${event.name}"/></td>
+                    <td><c:out value="${event.numberOfCar}"/></td>
+                    <td><c:out value="${event.city}"/></td>
                 </tr>
             </c:forEach>
             </tbody>
