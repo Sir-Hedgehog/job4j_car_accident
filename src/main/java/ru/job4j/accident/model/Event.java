@@ -1,11 +1,16 @@
 package ru.job4j.accident.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version 1.0
  * @since 29.05.2020
  */
 
+@EqualsAndHashCode
+@ToString
 public class Event {
     private String description;
     private String name;
