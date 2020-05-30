@@ -1,21 +1,19 @@
-package ru.job4j.police.config;
+package ru.job4j.accidents.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version 1.0
- * @since 12.05.2020
+ * @since 30.05.2020
  */
 
-@EnableWebMvc
 @Configuration
-@ComponentScan("ru.job4j.police.controller")
+@ComponentScan("ru.job4j.accidents.controller")
 public class SpringWebConfig {
 
     /**

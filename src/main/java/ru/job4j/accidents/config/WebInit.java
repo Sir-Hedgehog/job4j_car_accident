@@ -1,4 +1,4 @@
-package ru.job4j.accident;
+package ru.job4j.accidents.config;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -9,7 +9,7 @@ import javax.servlet.ServletRegistration;
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
  * @version 1.0
- * @since 28.05.2020
+ * @since 30.05.2020
  */
 
 public class WebInit implements WebApplicationInitializer {
@@ -21,7 +21,7 @@ public class WebInit implements WebApplicationInitializer {
 
     public void onStartup(ServletContext servletContext) {
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-        context.register(AppConfig.class);
+        context.register(SpringWebConfig.class);
         context.refresh();
         DispatcherServlet servlet = new DispatcherServlet(context);
         ServletRegistration.Dynamic registration = servletContext.addServlet("app", servlet);

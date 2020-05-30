@@ -3,38 +3,98 @@
 <!DOCTYPE html>
 <html lang="ru">
     <head>
-        <meta charset="utf-8" >
+        <meta charset='utf-8'/>
+        <title>Список ДТП</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <title>Events</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <style>
-            table.table {
-                background-color: rgba(211, 211, 211, 0.13);
+            html, body {
+                height: 100%;
+                color: #fff;
+                font-family: Arial, Tahoma, sans-serif;
+            }
+
+            #blockOfHeader {
+                display: inline;
+            }
+
+            #header {
+                margin-top: 1.4em;
+                text-transform: uppercase;
+                text-align: center;
+                color: #8080ab;
+            }
+
+            body {
+                background: rgba(44, 3, 171, 0.12);
+                display: flex;
+                flex-direction: column;
+            }
+
+            .container {
+                max-width: 90%;
+            }
+
+            section {
+                font-size: large;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            col {
+                width: 11em;
+            }
+
+            .table-bordered {
+                border: 3px solid #fff;
+                border-spacing: 0;
+                border-collapse: collapse;
+            }
+
+            th.contained {
+                background-color: #8080ab;
+            }
+
+            td.data {
+                background-color: #a09dab;
+            }
+
+            table.table-bordered tr td.data, th.contained {
+                vertical-align: middle;
+                text-align: center;
+                border: 3px solid #fff;
             }
         </style>
     </head>
     <body>
-        <table class="table">
-            <thead>
+    <div class="container">
+        <div class="row pt-2" id="blockOfHeader">
+            <h1 id="header">Список заявок по ДТП</h1>
+        </div>
+        <section>
+            <table class="table table-bordered">
+                <colgroup>
+                    <col span="1">
+                </colgroup>
                 <tr>
-                    <th>Случай</th>
-                    <th>Имя нарушителя</th>
-                    <th>Номер автомобиля</th>
-                    <th>Город</th>
-                </tr>
-            </thead>
-            <tbody>
-            <%--@elvariable id="events" type="java.util.List"--%>
-            <c:forEach items="${events}" var="event">
+                    <th class="contained">Имя водителя</th>
+                    <th class="contained">Описание</th>
+                    <th class="contained">Адрес происшествия</th>
                 <tr>
-                    <td><c:out value="${event.description}"/></td>
-                    <td><c:out value="${event.name}"/></td>
-                    <td><c:out value="${event.numberOfCar}"/></td>
-                    <td><c:out value="${event.city}"/></td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+                <%--@elvariable id="accidents" type="java.util.Map"--%>
+                <c:forEach items="${accidents}" var="accident">
+                    <tr>
+                        <td class="data"><c:out value="${accident.value.name}"/></td>
+                        <td class="data"><c:out value="${accident.value.text}"/></td>
+                        <td class="data"><c:out value="${accident.value.address}"/></td>
+                    </tr>
+                </c:forEach>
+            </table>
+        </section>
+    </div>
     </body>
 </html>
