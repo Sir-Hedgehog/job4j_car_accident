@@ -13,7 +13,7 @@ import ru.job4j.accidents.service.AccidentService;
 
 @Controller
 public class IndexController {
-    private final AccidentService accidents = AccidentService.getInstance();
+    private AccidentService accidents = new AccidentService();
 
     /**
      * Метод получает из валидационного блока список данных о правонарушениях и передает их на фронт

@@ -71,30 +71,30 @@
         </style>
     </head>
     <body>
-    <div class="container">
-        <div class="row pt-2" id="blockOfHeader">
-            <h1 id="header">Список заявок по ДТП</h1>
-        </div>
-        <section>
-            <table class="table table-bordered">
-                <colgroup>
-                    <col span="1">
-                </colgroup>
-                <tr>
-                    <th class="contained">Имя водителя</th>
-                    <th class="contained">Описание</th>
-                    <th class="contained">Адрес происшествия</th>
-                <tr>
-                <%--@elvariable id="accidents" type="java.util.Map"--%>
-                <c:forEach items="${accidents}" var="accident">
+        <div class="container">
+            <div class="row pt-2" id="blockOfHeader">
+                <h1 id="header">Список заявок по ДТП</h1>
+            </div>
+            <section>
+                <table class="table table-bordered">
+                    <colgroup>
+                        <col span="1">
+                    </colgroup>
                     <tr>
-                        <td class="data"><c:out value="${accident.value.name}"/></td>
-                        <td class="data"><c:out value="${accident.value.text}"/></td>
-                        <td class="data"><c:out value="${accident.value.address}"/></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </section>
-    </div>
+                        <th class="contained">Имя водителя</th>
+                        <th class="contained">Описание</th>
+                        <th class="contained">Адрес происшествия</th>
+                    <tr>
+                    <%--@elvariable id="accidents" type="java.util.Map"--%>
+                    <c:forEach items="${accidents}" var="accident">
+                        <tr>
+                            <td class="data"><c:out value="${accident.value.name}"/></td>
+                            <td class="data"><c:out value="${accident.value.text}"/></td>
+                            <td class="data"><c:out value="${accident.value.address}"/></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </section>
+        </div>
     </body>
 </html>

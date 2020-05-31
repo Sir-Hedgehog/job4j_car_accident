@@ -1,7 +1,7 @@
 package ru.job4j.accidents.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.mem.AccidentMem;
 import java.util.Map;
@@ -10,25 +10,18 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 30.05.2020
+ * @version 3.0
+ * @since 31.05.2020
  */
 
+@Component
 public class AccidentService {
-    private static final Logger LOG = LoggerFactory.getLogger(AccidentService.class);
     private static final Pattern CHECK_OF_NAME = Pattern.compile("((([A-Z])([a-z])+(\\s))(([A-Z])([a-z])+))|((([А-Я])([а-я])+(\\s))(([А-Я])([а-я])+))");
     private static final Pattern CHECK_OF_TEXT = Pattern.compile("((\\w|\\s){10,})");
-    private static final AccidentService INSTANCE = new AccidentService();
-    private final AccidentMem mem = AccidentMem.getInstance();
+    private final AccidentMem mem = new AccidentMem();
 
-    /**
-     * Метод дает право создать единственный экземпляр класса для взаимосвязи с контроллером
-     * @return - экземпляр класса AccidentService
-     */
-
-    public static AccidentService getInstance() {
-        return INSTANCE;
-    }
+    @Autowired
+    public AccidentService() {}
 
     /**
      * Метод проверяет введенное имя водителя на валидность
@@ -58,7 +51,6 @@ public class AccidentService {
      */
 
     public Map<Integer, Accident> validateGetData() {
-        LOG.info("Уровень 1!");
         return mem.getData();
     }
 }

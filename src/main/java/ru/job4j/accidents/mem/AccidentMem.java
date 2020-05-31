@@ -1,28 +1,24 @@
 package ru.job4j.accidents.mem;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 30.05.2020
+ * @version 2.0
+ * @since 31.05.2020
  */
 
+@Component
 public class AccidentMem {
-    private static final AccidentMem INSTANCE = new AccidentMem();
     private Map<Integer, Accident> accidents = new HashMap<>();
     private static int counter = 0;
 
-    /**
-     * Метод дает право создать единственный экземпляр класса для взаимосвязи с валидационным блоком
-     * @return - экземпляр класса AccidentMem
-     */
-
-    public static AccidentMem getInstance() {
-        return INSTANCE;
-    }
+    @Autowired
+    public AccidentMem() {}
 
     /**
      * Метод формирует результирующий список правонарушений
