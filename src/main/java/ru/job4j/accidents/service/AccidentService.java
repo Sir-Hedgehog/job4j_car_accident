@@ -21,7 +21,9 @@ public class AccidentService {
     private final AccidentMem mem = new AccidentMem();
 
     @Autowired
-    public AccidentService() {}
+    public AccidentService() {
+
+    }
 
     /**
      * Метод проверяет введенное имя водителя на валидность

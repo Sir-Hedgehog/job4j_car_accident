@@ -18,7 +18,9 @@ public class AccidentMem {
     private static int counter = 0;
 
     @Autowired
-    public AccidentMem() {}
+    public AccidentMem() {
+
+    }
 
     /**
      * Метод формирует результирующий список правонарушений
