@@ -122,11 +122,12 @@
                 </table>
             </section>
             <div id="buttons">
-
+                <form:form method="get" action='/create'>
                     <button id="createButton" type="button" class="btn btn-outline-dark">Создать заявление</button>
-
+                </form:form>
+                <form:form method="get" action='/update'>
                     <button id="updateButton" type="button" class="btn btn-outline-dark">Редактировать заявление</button>
-
+                </form:form>
             </div>
         </div>
     </body>
