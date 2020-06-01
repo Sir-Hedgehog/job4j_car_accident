@@ -1,19 +1,27 @@
 package ru.job4j.accidents.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import ru.job4j.accidents.service.AccidentService;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 30.05.2020
+ * @version 3.0
+ * @since 01.06.2020
  */
 
 @Controller
+@RequestMapping("/")
 public class IndexController {
-    private AccidentService accidents = new AccidentService();
+    private final AccidentService accidents;
+
+    @Autowired
+    public IndexController(AccidentService accidents) {
+        this.accidents = accidents;
+    }
 
     /**
      * Метод получает из валидационного блока список данных о правонарушениях и передает их на фронт
@@ -23,7 +31,7 @@ public class IndexController {
 
     @GetMapping(value = "/")
     public String showItems(ModelMap model) {
-        model.addAttribute("accidents", accidents.validateGetData());
+        model.addAttribute("accidents", accidents.getValidateAccidents());
         return "index";
     }
 }

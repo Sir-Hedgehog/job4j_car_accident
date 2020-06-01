@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -66,8 +67,33 @@
             table.table-bordered tr td.data, th.contained {
                 vertical-align: middle;
                 text-align: center;
-                border: 3px solid #fff;
+                border: 2px solid #fff;
             }
+
+            #buttons {
+                margin-top: 0.8em;
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #createButton {
+                margin-left: 2em;
+            }
+
+            #updateButton {
+                margin-right: 2em;
+            }
+
+            button.btn {
+                background-color: #fff;
+                color: #8080ab;
+                border-color: #8080ab;
+            }
+
+            button.btn:hover {
+                background-color: #8080ab;
+            }
+
         </style>
     </head>
     <body>
@@ -95,6 +121,14 @@
                     </c:forEach>
                 </table>
             </section>
+            <div id="buttons">
+                <form:form method="get" action='/create'>
+                    <button id="createButton" type="button" class="btn btn-outline-dark">Создать заявление</button>
+                </form:form>
+                <form:form method="get" action='/update'>
+                    <button id="updateButton" type="button" class="btn btn-outline-dark">Редактировать заявление</button>
+                </form:form>
+            </div>
         </div>
     </body>
 </html>

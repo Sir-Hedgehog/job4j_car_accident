@@ -10,19 +10,19 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 31.05.2020
+ * @version 4.0
+ * @since 01.06.2020
  */
 
 @Component
 public class AccidentService {
     private static final Pattern CHECK_OF_NAME = Pattern.compile("((([A-Z])([a-z])+(\\s))(([A-Z])([a-z])+))|((([А-Я])([а-я])+(\\s))(([А-Я])([а-я])+))");
     private static final Pattern CHECK_OF_TEXT = Pattern.compile("((\\w|\\s){10,})");
-    private final AccidentMem mem = new AccidentMem();
+    private final AccidentMem mem;
 
     @Autowired
-    public AccidentService() {
-
+    public AccidentService(AccidentMem mem) {
+        this.mem = mem;
     }
 
     /**
@@ -52,7 +52,29 @@ public class AccidentService {
      * @return - успешность операции
      */
 
-    public Map<Integer, Accident> validateGetData() {
-        return mem.getData();
+    public Map<Integer, Accident> getValidateAccidents() {
+        return mem.getAccidents();
+    }
+
+    /**
+     * Метод проверяет переданные данные на валидность для создания нового объявления о правонарушении
+     * @param accident - новое правонарушение
+     */
+
+    public void createValidateAccident(Accident accident) {
+        if (this.checkName(accident) && this.checkText(accident)) {
+            mem.createAccident(accident);
+        }
+    }
+
+    /**
+     * Метод проверяет переданные данные на валидность для обновления уже существующего объявления о правонарушении
+     * @param accident - обновленные данные для существующего правонарушения
+     */
+
+    public void updateValidateAccident(Accident accident) {
+        if (this.checkName(accident) && this.checkText(accident)) {
+            mem.updateAccident(accident);
+        }
     }
 }
