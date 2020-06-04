@@ -12,8 +12,8 @@ import java.util.HashMap;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.06.2020
+ * @version 3.0
+ * @since 04.06.2020
  */
 
 @Configuration

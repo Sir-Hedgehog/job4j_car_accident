@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="ru">
@@ -39,15 +38,12 @@
             }
 
             section {
+                margin-top: 1.5em;
                 font-size: large;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-            }
-
-            col {
-                width: 11em;
             }
 
             .table-bordered {
@@ -84,18 +80,18 @@
                 margin-right: 2em;
             }
 
-            button.btn {
+            input.btn {
                 background-color: #fff;
                 color: #8080ab;
                 border-color: #8080ab;
             }
 
-            button.btn:hover {
+            input.btn:hover {
                 background-color: #8080ab;
             }
-
         </style>
     </head>
+    <%--@elvariable id="accidents" type="java.util.Map"--%>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
@@ -103,15 +99,11 @@
             </div>
             <section>
                 <table class="table table-bordered">
-                    <colgroup>
-                        <col span="1">
-                    </colgroup>
                     <tr>
                         <th class="contained">Имя водителя</th>
                         <th class="contained">Описание</th>
                         <th class="contained">Адрес происшествия</th>
                     <tr>
-                    <%--@elvariable id="accidents" type="java.util.Map"--%>
                     <c:forEach items="${accidents}" var="accident">
                         <tr>
                             <td class="data"><c:out value="${accident.value.name}"/></td>
@@ -122,12 +114,12 @@
                 </table>
             </section>
             <div id="buttons">
-                <form:form method="get" action='/create'>
-                    <button id="createButton" type="button" class="btn btn-outline-dark">Создать заявление</button>
-                </form:form>
-                <form:form method="get" action='/update'>
-                    <button id="updateButton" type="button" class="btn btn-outline-dark">Редактировать заявление</button>
-                </form:form>
+                <form action="<c:url value='/create'/>" method='POST'>
+                    <input id="createButton" type="submit" name="create" class="btn btn-outline-dark" value="Создать заявление"/>
+                </form>
+                <form action="<c:url value='/checkId'/>" method='POST'>
+                    <input id="updateButton" type="submit" name="update" class="btn btn-outline-dark" value="Редактировать заявление"/>
+                </form>
             </div>
         </div>
     </body>

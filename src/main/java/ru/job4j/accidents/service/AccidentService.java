@@ -1,5 +1,7 @@
 package ru.job4j.accidents.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
@@ -10,14 +12,16 @@ import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 01.06.2020
+ * @version 5.0
+ * @since 04.06.2020
  */
 
 @Component
 public class AccidentService {
+    private static final Logger LOG = LoggerFactory.getLogger(AccidentService.class);
     private static final Pattern CHECK_OF_NAME = Pattern.compile("((([A-Z])([a-z])+(\\s))(([A-Z])([a-z])+))|((([А-Я])([а-я])+(\\s))(([А-Я])([а-я])+))");
-    private static final Pattern CHECK_OF_TEXT = Pattern.compile("((\\w|\\s){10,})");
+    private static final Pattern CHECK_OF_TEXT = Pattern.compile("((.){10,})");
+    private static int counter = 0;
     private final AccidentMem mem;
 
     @Autowired
@@ -61,20 +65,27 @@ public class AccidentService {
      * @param accident - новое правонарушение
      */
 
-    public void createValidateAccident(Accident accident) {
+    public boolean createValidateAccident(Accident accident) {
+        boolean result = false;
         if (this.checkName(accident) && this.checkText(accident)) {
+            accident.setId(++counter);
             mem.createAccident(accident);
+            result = true;
         }
+        return result;
     }
 
     /**
-     * Метод проверяет переданные данные на валидность для обновления уже существующего объявления о правонарушении
+     * Метод проверяет переданные данные на валидность для обновления уже существующего заявления о правонарушении
      * @param accident - обновленные данные для существующего правонарушения
      */
 
-    public void updateValidateAccident(Accident accident) {
+    public boolean updateValidateAccident(Accident accident) {
+        boolean result = false;
         if (this.checkName(accident) && this.checkText(accident)) {
             mem.updateAccident(accident);
+            result = true;
         }
+        return result;
     }
 }

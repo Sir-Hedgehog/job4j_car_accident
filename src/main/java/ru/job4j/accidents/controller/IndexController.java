@@ -9,8 +9,8 @@ import ru.job4j.accidents.service.AccidentService;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 01.06.2020
+ * @version 4.0
+ * @since 04.06.2020
  */
 
 @Controller
@@ -25,13 +25,13 @@ public class IndexController {
 
     /**
      * Метод получает из валидационного блока список данных о правонарушениях и передает их на фронт
-     * @param model - модель со списком данных (необходим для удобного парсинга)
+     * @param modelMap - модель со списком данных (необходим для удобного парсинга)
      * @return - список данных о правонарушениях для jsp-файла (index.jsp)
      */
 
     @GetMapping(value = "/")
-    public String showItems(ModelMap model) {
-        model.addAttribute("accidents", accidents.getValidateAccidents());
+    public String showItems(ModelMap modelMap) {
+        modelMap.addAttribute("accidents", accidents.getValidateAccidents());
         return "index";
     }
 }
