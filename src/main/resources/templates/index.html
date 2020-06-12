@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset='utf-8'/>
         <title>Список ДТП</title>
@@ -91,7 +89,6 @@
             }
         </style>
     </head>
-    <%--@elvariable id="accidents" type="java.util.Map"--%>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
@@ -104,20 +101,19 @@
                         <th class="contained">Описание</th>
                         <th class="contained">Адрес происшествия</th>
                     <tr>
-                    <c:forEach items="${accidents}" var="accident">
-                        <tr>
-                            <td class="data"><c:out value="${accident.value.name}"/></td>
-                            <td class="data"><c:out value="${accident.value.text}"/></td>
-                            <td class="data"><c:out value="${accident.value.address}"/></td>
-                        </tr>
-                    </c:forEach>
+                    <tr th:each="accident : ${accidents}">
+                        <td class="data" th:text="${accident.value.name}"></td>
+                        <td class="data" th:text="${accident.value.text}"></td>
+                        <td class="data" th:text="${accident.value.address}"></td>
+                    </tr>
                 </table>
             </section>
             <div id="buttons">
-                <form action="<c:url value='/create'/>" method='POST'>
+                <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
+                <form action="#" th:action="@{/create}" th:object="${accident}" method="POST">
                     <input id="createButton" type="submit" name="create" class="btn btn-outline-dark" value="Создать заявление"/>
                 </form>
-                <form action="<c:url value='/checkId'/>" method='POST'>
+                <form action="#" th:action="@{/checkId}" th:object="${accident}" method="POST">
                     <input id="updateButton" type="submit" name="update" class="btn btn-outline-dark" value="Редактировать заявление"/>
                 </form>
             </div>

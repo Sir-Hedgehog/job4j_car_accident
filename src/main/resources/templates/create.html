@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html lang="ru">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset='utf-8'/>
         <title>Список ДТП</title>
@@ -42,6 +40,11 @@
                 font-size: larger;
             }
 
+            span {
+                color: red;
+                font-size: small;
+            }
+
             section {
                 font-size: large;
                 display: flex;
@@ -75,30 +78,28 @@
             }
         </style>
     </head>
-    <%--@elvariable id="error" type="java.lang.String"--%>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
                 <h1 id="header">Создание заявки</h1>
             </div>
-            <form action="<c:url value='/save'/>" method="POST">
+            <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
+            <form action="#" th:action="@{/save}" th:object="${accident}" method="POST">
                 <section>
-                    <c:if test="${error != ''}">
-                        <p>
-                            <c:out value="${error}"/>
-                        </p>
-                    </c:if>
                     <div class="form-group">
-                        <label for="name">Введите Ваше имя: </label>
-                        <input type="text" class="form-control" id="name" name="name"/>
+                        <label for="name">Введите адрес происшествия: </label>
+                        <input type="text" th:field="*{name}" class="form-control" id="name"/>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
                     </div>
                     <div class="form-group">
                         <label for="address">Введите адрес происшествия: </label>
-                        <input type="text" class="form-control" id="address" name="address"/>
+                        <input type="text" th:field="*{address}" class="form-control" id="address"/>
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
                     </div>
                     <div class="form-group">
                         <label for="text">Составьте описание происшествия: </label>
-                        <textarea class="form-control" id="text" name="text" rows="8" placeholder="Ввод текста..."></textarea>
+                        <textarea class="form-control" th:field="*{text}" id="text" rows="8" placeholder="Ввод текста..."></textarea>
+                        <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text error</span>
                     </div>
                     <div id="buttons">
                         <input id="createButton" type="submit" name="save" class="btn btn-outline-dark" value="Создать заявление"/>

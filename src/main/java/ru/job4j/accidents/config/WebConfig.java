@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
+import org.thymeleaf.Thymeleaf;
 import ru.job4j.accidents.mem.AccidentMem;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
@@ -55,12 +56,12 @@ public class WebConfig {
      * @return - результат конфигурирования
      */
 
-    @Bean
+    /*@Bean
     public InternalResourceViewResolver viewResolver() {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix("/WEB-INF/view/");
-        viewResolver.setSuffix(".jsp");
+        viewResolver.setViewClass(Thymeleaf.class);
+        viewResolver.setPrefix("/templates/");
+        viewResolver.setSuffix(".html");
         return viewResolver;
-    }
+    }*/
 }

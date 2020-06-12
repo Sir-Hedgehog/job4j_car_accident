@@ -1,13 +1,14 @@
 package ru.job4j.accidents.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
+import javax.validation.Valid;
 import java.util.Set;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Set;
 
 @Controller
 public class AccidentController {
-    private static final Logger LOG = LoggerFactory.getLogger(AccidentController.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(AccidentController.class);
     private final AccidentService accidents;
 
     @Autowired
@@ -44,14 +45,17 @@ public class AccidentController {
      */
 
     @PostMapping(value = "/save")
-    public String addAccident(@ModelAttribute("accident") Accident accident, Model model) {
-        String result = "create";
-        if (accidents.createValidateAccident(accident)) {
+    public String addAccident(@Valid @ModelAttribute("accident") Accident accident, Model model, BindingResult bindingResult) {
+        String result = "";
+        if (bindingResult.hasErrors()) {
+            result = "create";
+            //model.addAttribute("error", "Введите корректные данные!");
+        } else {
+            accidents.createValidateAccident(accident);
             model.addAttribute("id", accident.getId());
             result = "successOfCreation";
-        } else {
-            model.addAttribute("error", "Введите корректные данные!");
         }
+
         return result;
     }
 
@@ -80,6 +84,7 @@ public class AccidentController {
         if (ids.contains(id)) {
             Accident accident = accidents.getValidateAccidents().get(id);
             model.addAttribute("accident", accident);
+            model.addAttribute("error", "");
             result = "update";
         } else {
             model.addAttribute("error", "Указан неверный идентификатор!");
@@ -90,17 +95,15 @@ public class AccidentController {
     /**
      * Метод сохраняет обновленное заявление
      * @param accident - заявление о правонарушении
-     * @param model - модель для передачи данных в зависимости от результата обновления данных
      * @return - страница с результатом обновления
      */
 
     @PostMapping(value = "/update")
-    public String updateAccident(@ModelAttribute("accident") Accident accident, Model model) {
+    public String updateAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult) {
         String result = "update";
-        if (accidents.updateValidateAccident(accident)) {
+        if (!bindingResult.hasErrors()) {
+            accidents.updateValidateAccident(accident);
             result = "successOfUpdate";
-        } else {
-            model.addAttribute("error", "Введите корректные данные!");
         }
         return result;
     }

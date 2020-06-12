@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset='utf-8'/>
         <title>Список ДТП</title>
@@ -74,23 +72,20 @@
             }
         </style>
     </head>
-    <%--@elvariable id="error" type="java.lang.String"--%>
-    <%--@elvariable id="id" type="java.lang.Integer"--%>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
                 <h3 id="header">Для редактирования заявления необходимо указать свой идентификатор!</h3>
             </div>
-            <form action="<c:url value='/edit'/>" method="GET">
+            <form action="#" th:action="@{/edit}" method="GET">
                 <section>
-                    <c:if test="${error != ''}">
-                        <p>
-                            <c:out value="${error}"/>
-                        </p>
-                    </c:if>
+                    <th:block th:if="${error != ''}">
+                        <p th:text="${error}">Error</p>
+                    </th:block>
                     <div class="form-group">
                         <label for="id">Введите идентификатор заявления: </label>
-                        <input type="text" class="form-control" id="id" name="id"/>
+                        <!--/*@thymesVar id="id" type="java.lang.Integer"*/-->
+                        <input type="text" class="form-control" id="id" name="id" th:field="${id}"/>
                     </div>
                     <div id="buttons">
                         <input id="sendId" type="submit" name="save" class="btn btn-outline-dark" value="Отправить"/>

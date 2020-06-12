@@ -1,7 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset='utf-8'/>
         <title>Список ДТП</title>
@@ -70,15 +68,15 @@
             }
         </style>
     </head>
-    <%--@elvariable id="id" type="java.lang.Integer"--%>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
                 <h1 id="header">Заявление успешно зарегистрировано!</h1>
             </div>
             <section>
-                <p>Идентификатор Вашего заявления: <c:out value="${id}"/></p>
-                <a href="<c:url value='/'/>">Перейти к таблице с существующими правонарушениями</a>
+                <!--/*@thymesVar id="id" type="java.lang.Integer"*/-->
+                <p>Идентификатор Вашего заявления: <span th:text="${id}">ID</span></p>
+                <a th:href="@{/}">Перейти к таблице с существующими правонарушениями</a>
             </section>
         </div>
     </body>

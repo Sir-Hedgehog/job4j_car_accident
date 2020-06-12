@@ -1,7 +1,5 @@
 package ru.job4j.accidents.mem;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
@@ -15,7 +13,7 @@ import java.util.Map;
 
 @Component
 public class AccidentMem {
-    private static final Logger LOG = LoggerFactory.getLogger(AccidentMem.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(AccidentMem.class);
     private Map<Integer, Accident> accidents;
 
     @Autowired
