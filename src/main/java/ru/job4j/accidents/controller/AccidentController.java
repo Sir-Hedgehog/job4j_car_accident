@@ -1,10 +1,11 @@
 package ru.job4j.accidents.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
@@ -18,13 +19,13 @@ import java.util.Set;
  */
 
 @Controller
+@RequestMapping("/")
 public class AccidentController {
-    //private static final Logger LOG = LoggerFactory.getLogger(AccidentController.class);
-    private final AccidentService accidents;
+    private static final Logger LOG = LoggerFactory.getLogger(AccidentController.class);
+    private final AccidentService accidentService;
 
-    @Autowired
-    public AccidentController(AccidentService accidents) {
-        this.accidents = accidents;
+    public AccidentController(AccidentService accidentService) {
+        this.accidentService = accidentService;
     }
 
     /**
@@ -32,7 +33,7 @@ public class AccidentController {
      * @return - страница создания нового заявления
      */
 
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     public String openCreationForm() {
         return "create";
     }
@@ -44,18 +45,17 @@ public class AccidentController {
      * @return - страница с результатом сохранения
      */
 
-    @PostMapping(value = "/save")
+    @PostMapping("/save")
     public String addAccident(@Valid @ModelAttribute("accident") Accident accident, Model model, BindingResult bindingResult) {
         String result = "";
         if (bindingResult.hasErrors()) {
             result = "create";
             //model.addAttribute("error", "Введите корректные данные!");
         } else {
-            accidents.createValidateAccident(accident);
+            accidentService.createValidateAccident(accident);
             model.addAttribute("id", accident.getId());
             result = "successOfCreation";
         }
-
         return result;
     }
 
@@ -64,7 +64,7 @@ public class AccidentController {
      * @return - страница с вводом идентификатора
      */
 
-    @PostMapping(value = "/checkId")
+    @PostMapping("/checkId")
     public String openIdForm() {
         return "checkId";
     }
@@ -76,13 +76,13 @@ public class AccidentController {
      * @return - страница обновления существующего заявления
      */
 
-    @GetMapping(value = "/edit")
+    @GetMapping("/edit")
     public String openUpdateForm(@RequestParam("id") String enteredId, Model model) {
         String result = "checkId";
-        Set<Integer> ids = accidents.getValidateAccidents().keySet();
+        Set<Integer> ids = accidentService.getValidateAccidents().keySet();
         int id = Integer.parseInt(enteredId);
         if (ids.contains(id)) {
-            Accident accident = accidents.getValidateAccidents().get(id);
+            Accident accident = accidentService.getValidateAccidents().get(id);
             model.addAttribute("accident", accident);
             model.addAttribute("error", "");
             result = "update";
@@ -98,11 +98,11 @@ public class AccidentController {
      * @return - страница с результатом обновления
      */
 
-    @PostMapping(value = "/update")
+    @PostMapping("/update")
     public String updateAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult) {
         String result = "update";
         if (!bindingResult.hasErrors()) {
-            accidents.updateValidateAccident(accident);
+            accidentService.updateValidateAccident(accident);
             result = "successOfUpdate";
         }
         return result;

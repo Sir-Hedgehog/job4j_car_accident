@@ -7,72 +7,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <style>
-            html, body {
-                height: 100%;
-                color: #8080ab;
-                font-family: Arial, Tahoma, sans-serif;
-            }
-    
-            #blockOfHeader {
-                display: inline;
-            }
-    
-            #header {
-                margin-top: 1em;
-                margin-bottom: 0.8em;
-                text-transform: uppercase;
-                text-align: center;
-            }
-    
-            body {
-                background: rgba(44, 3, 171, 0.12);
-                display: flex;
-                flex-direction: column;
-            }
-    
-            .form-group {
-                width: 50%;
-            }
-    
-            .container {
-                max-width: 90%;
-            }
-    
-            section {
-                font-size: large;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-            }
-    
-            p {
-                color: red;
-                font-size: larger;
-            }
-    
-            #buttons {
-                margin-top: 0.8em;
-                display: flex;
-                justify-content: space-between;
-            }
-    
-            #updateButton {
-                margin-right: 2em;
-            }
-    
-            input.btn {
-                background-color: #fff;
-                color: #8080ab;
-                border-color: #8080ab;
-            }
-    
-            input.btn:hover {
-                background-color: #8080ab;
-            }
-    
-        </style>
+        <link rel="stylesheet" th:href="@{/styles/update.css}"/>
     </head>
     <body>
     <div class="container">
@@ -85,12 +20,12 @@
                 <input type="hidden" name="id" th:field="*{id}"/>
                 <div class="form-group">
                     <label for="name">Введите Ваше ФИО: </label>
-                    <input type="text" th:field="*{name}" class="form-control" id="name" name="name"/>
+                    <input type="text" th:field="*{name}" class="form-control" id="name" name="name" th:value="${accident.name}"/>
                     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
                 </div>
                 <div class="form-group">
                     <label for="address">Введите адрес происшествия: </label>
-                    <input type="text" th:field="*{address}" class="form-control" id="address" name="address"/>
+                    <input type="text" th:field="*{address}" class="form-control" id="address" name="address" th:value="${accident.name}"/>
                     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name error</span>
                 </div>
                 <div class="form-group">

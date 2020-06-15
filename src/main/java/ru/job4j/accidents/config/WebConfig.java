@@ -1,11 +1,17 @@
 package ru.job4j.accidents.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
 import org.thymeleaf.Thymeleaf;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import ru.job4j.accidents.mem.AccidentMem;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
@@ -51,17 +57,19 @@ public class WebConfig {
         return new AccidentService(getAccidentMem());
     }
 
-    /**
-     * Метод осуществляет конфигурирование сущностей, отвечающих за визуализацию
-     * @return - результат конфигурирования
-     */
-
     /*@Bean
-    public InternalResourceViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setViewClass(Thymeleaf.class);
-        viewResolver.setPrefix("/templates/");
-        viewResolver.setSuffix(".html");
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine engine = new SpringTemplateEngine();
+        engine.setEnableSpringELCompiler(true);
+        return engine;
+    }
+
+    @Bean
+    public ThymeleafViewResolver viewResolver() {
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+        viewResolver.setTemplateEngine(templateEngine());
+        viewResolver.setOrder(1);
+        viewResolver.setViewNames(new String[] {".html"});
         return viewResolver;
     }*/
 }
