@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
     <head>
-
         <meta charset='utf-8'/>
         <title>Список ДТП</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,21 +14,17 @@
             <div class="row pt-2" id="blockOfHeader">
                 <h3 id="header">Для редактирования заявления необходимо указать свой идентификатор!</h3>
             </div>
-            <form action="#" th:action="@{/edit}" method="GET">
+            <form action="#" th:action="@{/edit}" th:object="${id}" method="GET">
                 <section>
-                    <th:block th:if="${error != ''}">
-                        <p th:text="${error}">Error</p>
-                    </th:block>
                     <div class="form-group">
                         <label for="id">Введите идентификатор заявления: </label>
-                        <!--/*@thymesVar id="id" type="java.lang.Integer"*/-->
-                        <input type="text" class="form-control" id="id" name="id" th:field="${id}"/>
+                        <input type="text" class="form-control" id="id" name="id" th:value="${id}"/>
+                        <span th:if="${error != ''}" th:text="${error}">Id error</span>
                     </div>
                     <div id="buttons">
                         <input id="sendId" type="submit" name="save" class="btn btn-outline-dark" value="Отправить"/>
                     </div>
                 </section>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
         </div>
     </body>

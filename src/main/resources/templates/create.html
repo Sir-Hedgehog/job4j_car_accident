@@ -18,7 +18,7 @@
             <form action="#" th:action="@{/save}" th:object="${accident}" method="POST">
                 <section>
                     <div class="form-group">
-                        <label for="name">Введите адрес происшествия: </label>
+                        <label for="name">Введите имя и фамилию: </label>
                         <input type="text" th:field="*{name}" class="form-control" id="name"/>
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
                     </div>
@@ -36,7 +36,6 @@
                         <input id="createButton" type="submit" name="save" class="btn btn-outline-dark" value="Создать заявление"/>
                     </div>
                 </section>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
         </div>
     </body>

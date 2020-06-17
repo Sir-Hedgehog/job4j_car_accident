@@ -10,34 +10,34 @@
         <link rel="stylesheet" th:href="@{/styles/update.css}"/>
     </head>
     <body>
-    <div class="container">
-        <div class="row pt-2" id="blockOfHeader">
-            <h1 id="header">Редактирование заявления</h1>
+        <div class="container">
+            <div class="row pt-2" id="blockOfHeader">
+                <h1 id="header">Редактирование заявления</h1>
+            </div>
+            <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
+            <form action="#" th:action="@{/update}" th:object="${accident}" method="POST">
+                <section>
+                    <input type="hidden" name="id" th:field="*{id}"/>
+                    <div class="form-group">
+                        <label for="name">Введите Ваше ФИО: </label>
+                        <input type="text" th:field="*{name}" class="form-control" id="name" name="name" th:value="${accident.name}"/>
+                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Введите адрес происшествия: </label>
+                        <input type="text" th:field="*{address}" class="form-control" id="address" name="address" th:value="${accident.name}"/>
+                        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name error</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="text">Составьте описание происшествия: </label>
+                        <textarea th:field="*{text}" class="form-control" id="text" name="text">${accident.text}</textarea>
+                        <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Name error</span>
+                    </div>
+                    <div id="buttons">
+                        <input id="updateButton" type="submit" name="save" class="btn btn-outline-dark" value="Обновить заявление"/>
+                    </div>
+                </section>
+            </form>
         </div>
-        <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
-        <form action="#" th:action="@{/update}" th:object="${accident}" method="POST">
-            <section>
-                <input type="hidden" name="id" th:field="*{id}"/>
-                <div class="form-group">
-                    <label for="name">Введите Ваше ФИО: </label>
-                    <input type="text" th:field="*{name}" class="form-control" id="name" name="name" th:value="${accident.name}"/>
-                    <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
-                </div>
-                <div class="form-group">
-                    <label for="address">Введите адрес происшествия: </label>
-                    <input type="text" th:field="*{address}" class="form-control" id="address" name="address" th:value="${accident.name}"/>
-                    <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name error</span>
-                </div>
-                <div class="form-group">
-                    <label for="text">Составьте описание происшествия: </label>
-                    <textarea th:field="*{text}" class="form-control" id="text" name="text">${accident.text}</textarea>
-                    <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Name error</span>
-                </div>
-                <div id="buttons">
-                    <input id="updateButton" type="submit" name="save" class="btn btn-outline-dark" value="Обновить заявление"/>
-                </div>
-            </section>
-        </form>
-    </div>
     </body>
 </html>

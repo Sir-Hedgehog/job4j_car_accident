@@ -29,13 +29,12 @@
                 </table>
             </section>
             <div id="buttons">
+                <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
                 <form action="#" th:action="@{/create}" method="POST">
                     <input id="createButton" type="submit" name="create" class="btn btn-outline-dark" value="Создать заявление"/>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form>
                 <form action="#" th:action="@{/checkId}" method="POST">
                     <input id="updateButton" type="submit" name="update" class="btn btn-outline-dark" value="Редактировать заявление"/>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 </form>
             </div>
         </div>

@@ -37,6 +37,15 @@ section {
     justify-content: center;
 }
 
+span {
+    color: red;
+    font-size: small;
+    text-align: center;
+    display: block;
+    margin-top: 0.4em;
+    font-style: italic;
+}
+
 p {
     color: red;
     font-size: larger;

@@ -5,18 +5,15 @@ import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.mem.AccidentMem;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 04.06.2020
+ * @version 6.0
+ * @since 17.06.2020
  */
 
 @Component
 public class AccidentService {
-    //private static final Logger LOG = LoggerFactory.getLogger(AccidentService.class);
     private static int counter = 0;
     private final AccidentMem mem;
 
@@ -35,7 +32,7 @@ public class AccidentService {
     }
 
     /**
-     * Метод проверяет переданные данные на валидность для создания нового объявления о правонарушении
+     * Метод иммитирует работу бизнес-логики в контексте создания нового объявления о правонарушении
      * @param accident - новое правонарушение
      */
 
@@ -45,7 +42,7 @@ public class AccidentService {
     }
 
     /**
-     * Метод проверяет переданные данные на валидность для обновления уже существующего заявления о правонарушении
+     * Метод иммитирует работу бизнес-логики в контексте обновления уже существующего заявления о правонарушении
      * @param accident - обновленные данные для существующего правонарушения
      */
 

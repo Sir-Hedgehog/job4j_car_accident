@@ -29,6 +29,15 @@ p {
     font-size: larger;
 }
 
+span {
+    color: red;
+    font-size: small;
+    text-align: center;
+    display: block;
+    margin-top: 0.4em;
+    font-style: italic;
+}
+
 section {
     font-size: large;
     display: flex;
