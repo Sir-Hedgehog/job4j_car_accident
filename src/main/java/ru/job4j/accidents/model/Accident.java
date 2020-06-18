@@ -1,19 +1,16 @@
 package ru.job4j.accidents.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeId;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.springframework.format.annotation.NumberFormat;
-
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 17.06.2020
+ * @version 4.0
+ * @since 18.06.2020
  */
 
 @EqualsAndHashCode
@@ -30,6 +27,9 @@ public class Accident {
 
     @NotEmpty(message = "Введите адрес происшествия!")
     private String address;
+
+    @Valid
+    private AccidentType type;
 
     public int getId() {
         return id;
@@ -61,5 +61,13 @@ public class Accident {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public AccidentType getType() {
+        return type;
+    }
+
+    public void setType(AccidentType type) {
+        this.type = type;
     }
 }

@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <link rel="stylesheet" th:href="@{/styles/index.css}"/>
     </head>
     <body>
@@ -18,18 +17,19 @@
                 <table class="table table-bordered">
                     <tr>
                         <th class="contained">Имя водителя</th>
+                        <th class="contained">Тип происшествия</th>
                         <th class="contained">Описание</th>
                         <th class="contained">Адрес происшествия</th>
                     <tr>
                     <tr th:each="accident : ${accidents}">
                         <td class="data" th:text="${accident.value.name}"></td>
+                        <td class="data" th:text="${accident.value.type.name}"></td>
                         <td class="data" th:text="${accident.value.text}"></td>
                         <td class="data" th:text="${accident.value.address}"></td>
                     </tr>
                 </table>
             </section>
             <div id="buttons">
-                <!--/*@thymesVar id="accident" type="ru.job4j.accidents.model.Accident"*/-->
                 <form action="#" th:action="@{/create}" method="POST">
                     <input id="createButton" type="submit" name="create" class="btn btn-outline-dark" value="Создать заявление"/>
                 </form>

@@ -6,7 +6,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <link rel="stylesheet" th:href="@{/styles/create.css}"/>
     </head>
     <body>
@@ -23,13 +22,21 @@
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span>
                     </div>
                     <div class="form-group">
+                        <label for="types">Выберите тип правонарушения: </label>
+                        <select th:field="*{type.id}" class="form-control" id="types">
+                            <option th:value="0"> --- выберите пункт --- </option>
+                            <option th:each="variant : ${types}" th:value="${variant.id}" th:text="${variant.name}"></option>
+                        </select>
+                        <span th:if="${#fields.hasErrors('type.id')}" th:errors="*{type.id}">Type error</span>
+                    </div>
+                    <div class="form-group">
                         <label for="address">Введите адрес происшествия: </label>
                         <input type="text" th:field="*{address}" class="form-control" id="address"/>
                         <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address error</span>
                     </div>
                     <div class="form-group">
                         <label for="text">Составьте описание происшествия: </label>
-                        <textarea class="form-control" th:field="*{text}" id="text" rows="8" placeholder="Ввод текста..."></textarea>
+                        <textarea class="form-control" th:field="*{text}" id="text" rows="5" placeholder="Ввод текста..."></textarea>
                         <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text error</span>
                     </div>
                     <div id="buttons">

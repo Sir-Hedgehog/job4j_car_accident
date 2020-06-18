@@ -1,25 +1,31 @@
 package ru.job4j.accidents.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.service.AccidentService;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 17.06.2020
+ * @version 3.0
+ * @since 18.06.2020
  */
 
 @Controller
 @RequestMapping("/")
 public class AccidentController {
     private final AccidentService accidentService;
+    private static final Logger LOG = LoggerFactory.getLogger(AccidentController.class);
 
     public AccidentController(AccidentService accidentService) {
         this.accidentService = accidentService;
@@ -46,6 +52,7 @@ public class AccidentController {
     @PostMapping("/create")
     public String openCreationForm(Model model) {
         model.addAttribute("accident", new Accident());
+        this.getListOfTypes(model);
         return "create";
     }
 
@@ -60,10 +67,15 @@ public class AccidentController {
     @PostMapping("/save")
     public String addAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult, Model model) {
         String result = "create";
+        LOG.info("Type of accident: " + accident.getType());
+        LOG.info("Id of type: " + accident.getType().getId());
+        LOG.info("Name of type: " + accident.getType().getName());
         if (!bindingResult.hasErrors()) {
             accidentService.createValidateAccident(accident);
             model.addAttribute("id", accident.getId());
             result = "successOfCreation";
+        } else {
+            this.getListOfTypes(model);
         }
         return result;
     }
@@ -96,6 +108,7 @@ public class AccidentController {
             if (ids.contains(parsedId)) {
                 Accident accident = accidentService.getValidateAccidents().get(parsedId);
                 model.addAttribute("accident", accident);
+                this.getListOfTypes(model);
                 result = "update";
             } else {
                 model.addAttribute("error", "Указанный идентификатор не существует!");
@@ -114,12 +127,28 @@ public class AccidentController {
      */
 
     @PostMapping("/update")
-    public String updateAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult) {
+    public String updateAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult, Model model) {
         String result = "update";
         if (!bindingResult.hasErrors()) {
             accidentService.updateValidateAccident(accident);
             result = "successOfUpdate";
+        } else {
+            this.getListOfTypes(model);
         }
         return result;
+    }
+
+    /**
+     * Метод формирует содержимое модели, необходимой для выбора типа правонарушения (на фронт)
+     * @param model - модель
+     */
+
+    private void getListOfTypes(Model model) {
+        List<AccidentType> types = new ArrayList<>();
+        types.add(AccidentType.of(1, "Две машины"));
+        types.add(AccidentType.of(2, "Машина и человек"));
+        types.add(AccidentType.of(3, "Машина и иной транспорт"));
+        types.add(AccidentType.of(4, "Другое"));
+        model.addAttribute("types", types);
     }
 }

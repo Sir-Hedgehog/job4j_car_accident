@@ -8,8 +8,8 @@ import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 6.0
- * @since 17.06.2020
+ * @version 7.0
+ * @since 18.06.2020
  */
 
 @Component
@@ -38,6 +38,7 @@ public class AccidentService {
 
     public void createValidateAccident(Accident accident) {
         accident.setId(++counter);
+        this.setNameOfType(accident);
         mem.createAccident(accident);
     }
 
@@ -47,6 +48,24 @@ public class AccidentService {
      */
 
     public void updateValidateAccident(Accident accident) {
+        this.setNameOfType(accident);
         mem.updateAccident(accident);
+    }
+
+    /**
+     * Метод устанавливает имена для идентификаторов типа правонарушения (на сервер)
+     * @param accident - правонарушение
+     */
+
+    private void setNameOfType(Accident accident) {
+        if (accident.getType().getId() == 1) {
+            accident.getType().setName("Две машины");
+        } else if (accident.getType().getId() == 2) {
+            accident.getType().setName("Машина и человек");
+        } else if (accident.getType().getId() == 3) {
+            accident.getType().setName("Машина и иной транспорт");
+        } else if (accident.getType().getId() == 4) {
+            accident.getType().setName("Другое");
+        }
     }
 }
