@@ -18,12 +18,16 @@
                     <tr>
                         <th class="contained">Имя водителя</th>
                         <th class="contained">Тип происшествия</th>
+                        <th class="contained">Статьи</th>
                         <th class="contained">Описание</th>
                         <th class="contained">Адрес происшествия</th>
                     <tr>
                     <tr th:each="accident : ${accidents}">
                         <td class="data" th:text="${accident.value.name}"></td>
                         <td class="data" th:text="${accident.value.type.name}"></td>
+                        <td class="data">
+                            <p th:each="rule : ${accident.value.rules}" th:text="${rule.name}"></p>
+                        </td>
                         <td class="data" th:text="${accident.value.text}"></td>
                         <td class="data" th:text="${accident.value.address}"></td>
                     </tr>

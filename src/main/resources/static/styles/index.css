@@ -34,6 +34,10 @@ section {
     justify-content: center;
 }
 
+p {
+    margin: 0;
+}
+
 .table-bordered {
     border: 3px solid #fff;
     border-spacing: 0;

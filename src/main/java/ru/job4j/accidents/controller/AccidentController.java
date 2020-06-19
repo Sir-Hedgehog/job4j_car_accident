@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
+import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.service.AccidentService;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 3.0
- * @since 18.06.2020
+ * @version 4.0
+ * @since 19.06.2020
  */
 
 @Controller
@@ -53,6 +55,8 @@ public class AccidentController {
     public String openCreationForm(Model model) {
         model.addAttribute("accident", new Accident());
         this.getListOfTypes(model);
+        this.getListOfRules(model);
+        model.addAttribute("error", "");
         return "create";
     }
 
@@ -60,28 +64,37 @@ public class AccidentController {
      * Метод сохраняет новое правонарушение в форме
      * @param accident - правонарушение
      * @param bindingResult - обработчик ошибок
+     * @param request - запрос, необходимый для получения списка выбранных статей
      * @param model - модель для передачи данных в зависимости от результата сохранения правонарушения
      * @return - страница с результатом сохранения
      */
 
     @PostMapping("/save")
-    public String addAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult, Model model) {
+    public String addAccident(@Valid @ModelAttribute("accident") Accident accident,
+                              BindingResult bindingResult,
+                              HttpServletRequest request,
+                              Model model) {
         String result = "create";
-        LOG.info("Type of accident: " + accident.getType());
-        LOG.info("Id of type: " + accident.getType().getId());
-        LOG.info("Name of type: " + accident.getType().getName());
-        if (!bindingResult.hasErrors()) {
-            accidentService.createValidateAccident(accident);
+        String[] ruleIds = request.getParameterValues("ruleIds");
+        if (!bindingResult.hasErrors() && ruleIds != null) {
+            accidentService.createValidateAccident(accident, ruleIds);
             model.addAttribute("id", accident.getId());
             result = "successOfCreation";
+        } else if (ruleIds == null || ruleIds.length == 0) {
+            model.addAttribute("error", "Выберите статьи, соответствующие Вашему происшествию!");
+            this.getListOfTypes(model);
+            this.getListOfRules(model);
         } else {
             this.getListOfTypes(model);
+            this.getListOfRules(model);
         }
         return result;
     }
 
     /**
      * Метод открывает страницу с вводом идентификатора
+     * @param model - модель для передачи необходимых атрибутов
+     * @param id - идентификатор для модели
      * @return - страница с вводом идентификатора
      */
 
@@ -109,6 +122,7 @@ public class AccidentController {
                 Accident accident = accidentService.getValidateAccidents().get(parsedId);
                 model.addAttribute("accident", accident);
                 this.getListOfTypes(model);
+                this.getListOfRules(model);
                 result = "update";
             } else {
                 model.addAttribute("error", "Указанный идентификатор не существует!");
@@ -123,17 +137,28 @@ public class AccidentController {
      * Метод сохраняет обновленное заявление
      * @param accident - заявление о правонарушении
      * @param bindingResult - обработчик ошибок
+     * @param request - запрос, необходимый для получения списка выбранных статей
+     * @param model - модель передает необходимые атрибутов на фронт
      * @return - страница с результатом обновления
      */
 
     @PostMapping("/update")
-    public String updateAccident(@Valid @ModelAttribute("accident") Accident accident, BindingResult bindingResult, Model model) {
+    public String updateAccident(@Valid @ModelAttribute("accident") Accident accident,
+                                 BindingResult bindingResult,
+                                 HttpServletRequest request,
+                                 Model model) {
         String result = "update";
-        if (!bindingResult.hasErrors()) {
-            accidentService.updateValidateAccident(accident);
+        String[] ruleIds = request.getParameterValues("ruleIds");
+        if (ruleIds == null || ruleIds.length == 0) {
+            model.addAttribute("error", "Выберите статьи, соответствующие Вашему происшествию!");
+            this.getListOfTypes(model);
+            this.getListOfRules(model);
+        } else if (!bindingResult.hasErrors()) {
+            accidentService.updateValidateAccident(accident, ruleIds);
             result = "successOfUpdate";
         } else {
             this.getListOfTypes(model);
+            this.getListOfRules(model);
         }
         return result;
     }
@@ -150,5 +175,20 @@ public class AccidentController {
         types.add(AccidentType.of(3, "Машина и иной транспорт"));
         types.add(AccidentType.of(4, "Другое"));
         model.addAttribute("types", types);
+    }
+
+    /**
+     * Метод формирует содержимое, необходимой для выбора типа статей (на фронт)
+     * @param model - модель
+     */
+
+    private void getListOfRules(Model model) {
+        List<Rule> rules = new ArrayList<>();
+        rules.add(Rule.of(1, "Статья №1 КоАП РФ"));
+        rules.add(Rule.of(2, "Статья №2 КоАП РФ"));
+        rules.add(Rule.of(3, "Статья №3 КоАП РФ"));
+        rules.add(Rule.of(4, "Статья №4 КоАП РФ"));
+        rules.add(Rule.of(5, "Статья №5 КоАП РФ"));
+        model.addAttribute("rules", rules);
     }
 }

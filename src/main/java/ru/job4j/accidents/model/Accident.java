@@ -6,11 +6,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 18.06.2020
+ * @version 5.0
+ * @since 19.06.2020
  */
 
 @EqualsAndHashCode
@@ -30,6 +31,8 @@ public class Accident {
 
     @Valid
     private AccidentType type;
+
+    private Set<Rule> rules;
 
     public int getId() {
         return id;
@@ -69,5 +72,13 @@ public class Accident {
 
     public void setType(AccidentType type) {
         this.type = type;
+    }
+
+    public Set<Rule> getRules() {
+        return rules;
+    }
+
+    public void setRules(Set<Rule> rules) {
+        this.rules = rules;
     }
 }

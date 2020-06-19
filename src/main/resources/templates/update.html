@@ -31,13 +31,20 @@
                         <span th:if="${#fields.hasErrors('type.id')}" th:errors="*{type.id}">Type error</span>
                     </div>
                     <div class="form-group">
+                        <label for="rules">Выберите статьи правонарушения: </label>
+                        <select th:name="ruleIds" class="form-control" id="rules"  size="3" multiple>
+                            <option th:each="variant : ${rules}" th:value="${variant.id}" th:text="${variant.name}"></option>
+                        </select>
+                        <span th:if="${error != ''}" th:text="${error}">Rule error</span>
+                    </div>
+                    <div class="form-group">
                         <label for="address">Введите адрес происшествия: </label>
                         <input type="text" th:field="*{address}" class="form-control" id="address" name="address" th:value="${accident.name}"/>
                         <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Name error</span>
                     </div>
                     <div class="form-group">
                         <label for="text">Составьте описание происшествия: </label>
-                        <textarea th:field="*{text}" class="form-control" id="text" name="text">${accident.text}</textarea>
+                        <textarea th:field="*{text}" class="form-control" id="text" rows="3" name="text">${accident.text}</textarea>
                         <span th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Name error</span>
                     </div>
                     <div id="buttons">

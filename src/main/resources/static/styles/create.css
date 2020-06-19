@@ -53,6 +53,7 @@ section {
 
 #buttons {
     margin-top: 0.8em;
+    margin-bottom: 1.1em;
     display: flex;
     justify-content: space-between;
 }
