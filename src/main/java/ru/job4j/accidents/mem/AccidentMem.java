@@ -1,20 +1,18 @@
 package ru.job4j.accidents.mem;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import ru.job4j.accidents.model.Accident;
 import java.util.Map;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 17.06.2020
+ * @version 6.0
+ * @since 23.06.2020
  */
 
 public class AccidentMem {
 
     private Map<Integer, Accident> accidents;
 
-    @Autowired
     public AccidentMem(Map<Integer, Accident> accidents) {
         this.accidents = accidents;
     }

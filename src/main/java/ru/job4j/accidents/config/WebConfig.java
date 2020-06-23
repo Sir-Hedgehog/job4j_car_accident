@@ -3,15 +3,15 @@ package ru.job4j.accidents.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ru.job4j.accidents.mem.AccidentMem;
-import ru.job4j.accidents.model.Accident;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import ru.job4j.accidents.repository.AccidentJdbcTemplate;
 import ru.job4j.accidents.service.AccidentService;
-import java.util.HashMap;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 17.06.2020
+ * @version 5.0
+ * @since 23.06.2020
  */
 
 @Configuration
@@ -19,23 +19,13 @@ import java.util.HashMap;
 public class WebConfig {
 
     /**
-     * Метод формирует единственный экземпляр хранилища
-     * @return - созданное хранилище данных
-     */
-
-    @Bean
-    public HashMap<Integer, Accident> getAccidentStore() {
-        return new HashMap<>();
-    }
-
-    /**
      * Метод формирует единственный экземпляр класса получения данных из хранилища
      * @return - созданный экземпляр класса получения данных из хранилища
      */
 
     @Bean
-    public AccidentMem getAccidentMem() {
-        return new AccidentMem(getAccidentStore());
+    public AccidentJdbcTemplate getAccidentJdbcTemplate() {
+        return new AccidentJdbcTemplate(new JdbcTemplate());
     }
 
     /**
@@ -45,6 +35,6 @@ public class WebConfig {
 
     @Bean
     public AccidentService getAccidentService() {
-        return new AccidentService(getAccidentMem());
+        return new AccidentService(getAccidentJdbcTemplate());
     }
 }

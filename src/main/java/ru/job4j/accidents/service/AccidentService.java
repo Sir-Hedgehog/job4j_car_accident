@@ -3,33 +3,34 @@ package ru.job4j.accidents.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.mem.AccidentMem;
 import ru.job4j.accidents.model.Rule;
+import ru.job4j.accidents.repository.AccidentJdbcTemplate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 8.0
- * @since 19.06.2020
+ * @version 9.0
+ * @since 23.06.2020
  */
 
 @Component
 public class AccidentService {
-    private static int counter = 0;
-    private final AccidentMem mem;
+    private static int generator = (int) ((Math.random() * 2000000) + 1);
+    private final AccidentJdbcTemplate accidentJdbcTemplate;
 
     @Autowired
-    public AccidentService(AccidentMem mem) {
-        this.mem = mem;
+    public AccidentService(AccidentJdbcTemplate accidentJdbcTemplate) {
+        this.accidentJdbcTemplate = accidentJdbcTemplate;
     }
 
     /**
      * Метод передает контроллеру данные о зарегистрированных правонарушениях
-     * @return - успешность операции
+     * @return - список правонарушений
      */
 
     public Map<Integer, Accident> getValidateAccidents() {
-        return mem.getAccidents();
+        return accidentJdbcTemplate.getAccidents().stream().collect(Collectors.toMap(Accident::getId, accident -> accident));
     }
 
     /**
@@ -38,10 +39,10 @@ public class AccidentService {
      */
 
     public void createValidateAccident(Accident accident, String[] ruleIds) {
-        accident.setId(++counter);
+        accident.setId(generator);
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        mem.createAccident(accident);
+        accidentJdbcTemplate.createAccident(accident);
     }
 
     /**
@@ -52,7 +53,7 @@ public class AccidentService {
     public void updateValidateAccident(Accident accident, String[] ruleIds) {
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        mem.updateAccident(accident);
+        accidentJdbcTemplate.updateAccident(accident);
     }
 
     /**
