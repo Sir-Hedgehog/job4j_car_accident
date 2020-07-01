@@ -2,6 +2,9 @@ package ru.job4j.accidents.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.action.internal.OrphanRemovalAction;
+
+import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
@@ -10,28 +13,40 @@ import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 19.06.2020
+ * @version 6.0
+ * @since 01.07.2020
  */
 
+@Entity(name = "Accident")
+@Table(name = "accident")
 @EqualsAndHashCode
 @ToString
 public class Accident {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     private int id;
 
     @Pattern(regexp = "((([A-Z])([a-z])+(\\s))(([A-Z])([a-z])+))|((([А-Я])([а-я])+(\\s))(([А-Я])([а-я])+))",
             message = "Поле должно содержать фамилию и имя с заглавной буквы!")
+    @Column(name = "name")
     private String name;
 
     @Size(min = 20, message = "Текст происшествия должен содержать не менее 20 символов!")
+    @Column(name = "text")
     private String text;
 
     @NotEmpty(message = "Введите адрес происшествия!")
+    @Column(name = "address")
     private String address;
 
     @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "accident_type_id")
     private AccidentType type;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "accident_id")
     private Set<Rule> rules;
 
     public int getId() {

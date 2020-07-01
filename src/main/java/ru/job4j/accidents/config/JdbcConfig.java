@@ -15,7 +15,7 @@ import javax.sql.DataSource;
  * @since 23.06.2020
  */
 
-@Configuration
+/*@Configuration
 @PropertySource("classpath:db.properties")
 @EnableTransactionManagement
 public class JdbcConfig {
@@ -25,8 +25,8 @@ public class JdbcConfig {
                          @Value("${jdbc.username}") String username,
                          @Value("${jdbc.password}") String password) {
         BasicDataSource ds = new BasicDataSource();
-        ds.setDriverClassName(driver);
         ds.setUrl(url);
+        ds.setDriverClassName(driver);
         ds.setUsername(username);
         ds.setPassword(password);
         return ds;
@@ -36,4 +36,4 @@ public class JdbcConfig {
     public JdbcTemplate jdbcTemplate(DataSource ds) {
         return new JdbcTemplate(ds);
     }
-}
+}*/

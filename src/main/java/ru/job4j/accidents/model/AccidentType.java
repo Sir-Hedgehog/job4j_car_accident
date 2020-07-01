@@ -2,21 +2,34 @@ package ru.job4j.accidents.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 18.06.2020
+ * @version 2.0
+ * @since 01.07.2020
  */
 
+@Entity(name = "AccidentType")
+@Table(name = "accident_type")
 @EqualsAndHashCode
 @ToString
 public class AccidentType {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
+    private int key;
+
+    @OneToOne(mappedBy = "type", cascade = CascadeType.ALL)
+    private Accident accident;
+
     @DecimalMin(value = "1", message = "Выберите тип происшествия!")
+    @Column(name = "type_id", nullable = false)
     private int id;
 
+    @Column(name = "type_name", nullable = false)
     private String name;
 
     public static AccidentType of(int id, String name) {
@@ -24,6 +37,22 @@ public class AccidentType {
         type.id = id;
         type.name = name;
         return type;
+    }
+
+    public int getKey() {
+        return key;
+    }
+
+    public void setKey(int key) {
+        this.key = key;
+    }
+
+    public Accident getAccident() {
+        return accident;
+    }
+
+    public void setAccident(Accident accident) {
+        this.accident = accident;
     }
 
     public int getId() {

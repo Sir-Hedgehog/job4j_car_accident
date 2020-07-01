@@ -1,22 +1,29 @@
 package ru.job4j.accidents.config;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.job4j.accidents.repository.AccidentJdbcTemplate;
+import ru.job4j.accidents.repository.AccidentHibernate;
 import ru.job4j.accidents.service.AccidentService;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 5.0
- * @since 23.06.2020
+ * @version 6.0
+ * @since 01.07.2020
  */
 
 @Configuration
 @ComponentScan("ru.job4j.accidents.controller")
 public class WebConfig {
+
+    private final SessionFactory sessionFactory;
+
+    @Autowired
+    public WebConfig(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     /**
      * Метод формирует единственный экземпляр класса получения данных из хранилища
@@ -24,8 +31,8 @@ public class WebConfig {
      */
 
     @Bean
-    public AccidentJdbcTemplate getAccidentJdbcTemplate() {
-        return new AccidentJdbcTemplate(new JdbcTemplate());
+    public AccidentHibernate getAccidentHibernate() {
+        return new AccidentHibernate(sessionFactory);
     }
 
     /**
@@ -35,6 +42,6 @@ public class WebConfig {
 
     @Bean
     public AccidentService getAccidentService() {
-        return new AccidentService(getAccidentJdbcTemplate());
+        return new AccidentService(getAccidentHibernate());
     }
 }

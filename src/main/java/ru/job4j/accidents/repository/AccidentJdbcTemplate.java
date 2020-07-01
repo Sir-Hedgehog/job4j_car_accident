@@ -13,20 +13,20 @@ import java.util.*;
  * @since 23.06.2020
  */
 
-@Repository
+/*@Repository
 public class AccidentJdbcTemplate {
     private final JdbcTemplate jdbc;
 
     public AccidentJdbcTemplate(JdbcTemplate jdbc) {
         this.jdbc = jdbc;
-    }
+    }*/
 
     /**
      * Метод добавляет новое происшествие в базу данных
      * @param accident - происшествие
      */
 
-    public void createAccident(Accident accident) {
+    /*public void createAccident(Accident accident) {
         String addAccident = "INSERT INTO accident (id, name, text, address) VALUES (?, ?, ?, ?)";
         jdbc.update(addAccident, accident.getId(), accident.getName(), accident.getText(), accident.getAddress());
         String addAccidentType = "INSERT INTO accident_type (accident_id, type_id, type_name) VALUES (?, ?, ?)";
@@ -35,14 +35,14 @@ public class AccidentJdbcTemplate {
         for (Rule rule : accident.getRules()) {
             jdbc.update(addAccidentRule, accident.getId(), rule.getId(), rule.getName());
         }
-    }
+    }*/
 
     /**
      * Метод формирует список существующих данных по происшествиям
      * @return - список данных
      */
 
-    public List<Accident> getAccidents() {
+    /*public List<Accident> getAccidents() {
         String allAccidents = "SELECT "
                                     + "accident.id, "
                                     + "accident.name, "
@@ -89,14 +89,14 @@ public class AccidentJdbcTemplate {
             }
             return new ArrayList<>(mapOfAccidents.values());
         });
-    }
+    }*/
 
     /**
      * Метод обновляет данные о происшествии
      * @param accident - происшествие
      */
 
-    public void updateAccident(Accident accident) {
+    /*public void updateAccident(Accident accident) {
         String updateAccident = "UPDATE accident SET name = ?, text = ?, address = ? WHERE id = ?";
         jdbc.update(updateAccident, accident.getName(), accident.getText(), accident.getAddress(), accident.getId());
         String updateAccidentType = "UPDATE accident_type SET type_id = ?, type_name = ? WHERE accident_id = ?";
@@ -108,4 +108,4 @@ public class AccidentJdbcTemplate {
             jdbc.update(updateAccidentRule, accident.getId(), rule.getId(), rule.getName());
         }
     }
-}
+}*/

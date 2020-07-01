@@ -4,24 +4,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.AccidentJdbcTemplate;
+import ru.job4j.accidents.repository.AccidentHibernate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 9.0
- * @since 23.06.2020
+ * @version 10.0
+ * @since 01.07.2020
  */
 
 @Component
 public class AccidentService {
-    private static int generator = (int) ((Math.random() * 2000000) + 1);
-    private final AccidentJdbcTemplate accidentJdbcTemplate;
+    private final AccidentHibernate accidentHibernate;
 
     @Autowired
-    public AccidentService(AccidentJdbcTemplate accidentJdbcTemplate) {
-        this.accidentJdbcTemplate = accidentJdbcTemplate;
+    public AccidentService(AccidentHibernate accidentHibernate) {
+        this.accidentHibernate = accidentHibernate;
     }
 
     /**
@@ -30,7 +29,7 @@ public class AccidentService {
      */
 
     public Map<Integer, Accident> getValidateAccidents() {
-        return accidentJdbcTemplate.getAccidents().stream().collect(Collectors.toMap(Accident::getId, accident -> accident));
+        return accidentHibernate.getAccidents().stream().collect(Collectors.toMap(Accident::getId, accident -> accident));
     }
 
     /**
@@ -39,10 +38,9 @@ public class AccidentService {
      */
 
     public void createValidateAccident(Accident accident, String[] ruleIds) {
-        accident.setId(generator);
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        accidentJdbcTemplate.createAccident(accident);
+        accidentHibernate.createAccident(accident);
     }
 
     /**
@@ -53,7 +51,7 @@ public class AccidentService {
     public void updateValidateAccident(Accident accident, String[] ruleIds) {
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        accidentJdbcTemplate.updateAccident(accident);
+        accidentHibernate.updateAccident(accident);
     }
 
     /**
