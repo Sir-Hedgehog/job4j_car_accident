@@ -7,14 +7,14 @@ import javax.validation.constraints.DecimalMin;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.07.2020
+ * @version 3.0
+ * @since 02.07.2020
  */
 
 @Entity(name = "AccidentType")
 @Table(name = "accident_type")
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = "accident")
+@ToString(exclude = "accident")
 public class AccidentType {
 
     @Id

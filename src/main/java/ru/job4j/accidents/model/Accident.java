@@ -2,8 +2,6 @@ package ru.job4j.accidents.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import org.hibernate.action.internal.OrphanRemovalAction;
-
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -13,14 +11,14 @@ import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 6.0
- * @since 01.07.2020
+ * @version 7.0
+ * @since 02.07.2020
  */
 
 @Entity(name = "Accident")
 @Table(name = "accident")
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = "type, rules")
+@ToString(exclude = "type, rules")
 public class Accident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

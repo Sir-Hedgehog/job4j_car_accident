@@ -1,26 +1,30 @@
 package ru.job4j.accidents.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.AccidentHibernate;
+import ru.job4j.accidents.repository.AccidentData;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 10.0
- * @since 01.07.2020
+ * @version 11.0
+ * @since 02.07.2020
  */
 
 @Component
 public class AccidentService {
-    private final AccidentHibernate accidentHibernate;
+    private final AccidentData data;
+    private static final Logger LOG = LoggerFactory.getLogger(AccidentService.class);
 
     @Autowired
-    public AccidentService(AccidentHibernate accidentHibernate) {
-        this.accidentHibernate = accidentHibernate;
+    public AccidentService(@Qualifier("accidentData") AccidentData data) {
+        this.data = data;
     }
 
     /**
@@ -29,7 +33,7 @@ public class AccidentService {
      */
 
     public Map<Integer, Accident> getValidateAccidents() {
-        return accidentHibernate.getAccidents().stream().collect(Collectors.toMap(Accident::getId, accident -> accident));
+        return data.findAll().stream().collect(Collectors.toMap(Accident::getId, accident -> accident));
     }
 
     /**
@@ -40,7 +44,7 @@ public class AccidentService {
     public void createValidateAccident(Accident accident, String[] ruleIds) {
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        accidentHibernate.createAccident(accident);
+        data.save(accident);
     }
 
     /**
@@ -51,7 +55,15 @@ public class AccidentService {
     public void updateValidateAccident(Accident accident, String[] ruleIds) {
         this.setNameOfType(accident);
         this.setRules(accident, ruleIds);
-        accidentHibernate.updateAccident(accident);
+        //Получение уникального идентификатора старого значения типа
+        Accident oldAccident = data.findById(accident.getId()).get();
+        int oldAccidentTypeId = oldAccident.getType().getKey();
+        //Обновление данных о правонарушении
+        data.save(accident);
+        //Удаление старого значения типа
+        data.deleteNotActiveType(oldAccidentTypeId);
+        //Удаление старых значений выбранных статей
+        data.deleteAllNotActiveRules();
     }
 
     /**

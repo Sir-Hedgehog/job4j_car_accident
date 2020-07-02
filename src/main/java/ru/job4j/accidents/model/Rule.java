@@ -6,14 +6,14 @@ import javax.persistence.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
- * @since 01.07.2020
+ * @version 3.0
+ * @since 02.07.2020
  */
 
 @Entity(name = "Rule")
 @Table(name = "accident_rule")
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = "accident")
+@ToString(exclude = "accident")
 public class Rule {
 
     @Id

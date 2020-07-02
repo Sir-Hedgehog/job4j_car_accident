@@ -1,28 +1,27 @@
 package ru.job4j.accidents.config;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ru.job4j.accidents.repository.AccidentHibernate;
+import ru.job4j.accidents.repository.AccidentData;
 import ru.job4j.accidents.service.AccidentService;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 6.0
- * @since 01.07.2020
+ * @version 7.0
+ * @since 02.07.2020
  */
 
 @Configuration
 @ComponentScan("ru.job4j.accidents.controller")
 public class WebConfig {
 
-    private final SessionFactory sessionFactory;
+    private final AccidentData accidentData;
 
     @Autowired
-    public WebConfig(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public WebConfig(AccidentData accidentData) {
+        this.accidentData = accidentData;
     }
 
     /**
@@ -31,8 +30,8 @@ public class WebConfig {
      */
 
     @Bean
-    public AccidentHibernate getAccidentHibernate() {
-        return new AccidentHibernate(sessionFactory);
+    public AccidentData getAccidentData() {
+        return accidentData;
     }
 
     /**
@@ -42,6 +41,6 @@ public class WebConfig {
 
     @Bean
     public AccidentService getAccidentService() {
-        return new AccidentService(getAccidentHibernate());
+        return new AccidentService(getAccidentData());
     }
 }
