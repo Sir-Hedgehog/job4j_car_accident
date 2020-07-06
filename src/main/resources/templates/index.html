@@ -6,13 +6,156 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" th:href="@{/styles/index.css}"/>
     </head>
+    <style>
+        html, body {
+            height: 100%;
+            color: #fff;
+            font-family: Arial, Tahoma, sans-serif;
+        }
+
+        #blockOfHeader {
+            display: inline;
+        }
+
+        #header {
+            margin-top: 1.4em;
+            text-transform: uppercase;
+            text-align: center;
+            color: #8080ab;
+        }
+
+        body {
+            background: rgba(44, 3, 171, 0.12);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 90%;
+        }
+
+        section {
+            margin-top: 1em;
+            font-size: large;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        nav ul {
+            display: table;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: table-cell;
+        }
+
+        #login {
+            color: #8080ab;
+            text-align: left;
+            font-size: larger;
+        }
+
+        #pLogin {
+            margin-left: 2em;
+        }
+
+        #logout {
+             text-align: right;
+        }
+
+        #aLogout {
+            margin-right: 2em;
+        }
+
+        #currentLogin {
+            font-style: italic;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .table-bordered {
+            border: 3px solid #fff;
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
+
+        th.contained {
+            background-color: #8080ab;
+        }
+
+        td.data {
+            background-color: #a09dab;
+        }
+
+        table.table-bordered tr td.data, th.contained {
+            vertical-align: middle;
+            text-align: center;
+            border: 2px solid #fff;
+        }
+
+        #buttons {
+            margin-top: 0.8em;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #createButton {
+            margin-left: 2em;
+        }
+
+        #updateButton {
+            margin-right: 2em;
+        }
+
+        input.btn {
+            background-color: #fff;
+            color: #8080ab;
+            border-color: #8080ab;
+        }
+
+        input.btn:hover {
+            background-color: #8080ab;
+        }
+
+        a {
+            color: #8080ab;
+            text-decoration: underline;
+            font-size: larger;
+            margin-right: 1.5em;
+        }
+
+        a:hover {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
     <body>
         <div class="container">
             <div class="row pt-2" id="blockOfHeader">
                 <h1 id="header">Список заявок по ДТП</h1>
             </div>
+            <nav>
+                <ul>
+                    <li id="login"><p id="pLogin">Пользователь: <span id="currentLogin" th:text="${user.username}"></span></p></li>
+                    <li id="logout"><a id="aLogout" href="#" th:href="@{/logout}" title='Выход'>Выход</a></li>
+                </ul>
+            </nav>
+            <!-- <form id="logout" th:action="@{/logout}" method="GET"> -->
+
+                <!-- <input type="submit" value="Выход"> -->
+            <!-- </form> -->
             <section>
                 <table class="table table-bordered">
                     <tr>

@@ -4,6 +4,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -16,8 +17,8 @@ import javax.sql.DataSource;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 02.07.2020
+ * @version 2.0
+ * @since 07.07.2020
  */
 
 @Configuration
@@ -35,6 +36,7 @@ public class DataConfig {
      * @return - пул соединений
      */
 
+    @Primary
     @Bean
     public DataSource getDataSource(@Value("${jdbc.driver}") String driver,
                          @Value("${jdbc.url}") String url,

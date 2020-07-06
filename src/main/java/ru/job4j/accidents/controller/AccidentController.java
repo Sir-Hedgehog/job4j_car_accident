@@ -2,6 +2,7 @@ package ru.job4j.accidents.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,8 +20,8 @@ import java.util.Set;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 4.0
- * @since 19.06.2020
+ * @version 5.0
+ * @since 07.07.2020
  */
 
 @Controller
@@ -41,6 +42,7 @@ public class AccidentController {
     @GetMapping("/")
     public ModelAndView showItems() {
         ModelAndView modelAndView = new ModelAndView("index");
+        modelAndView.addObject("user", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         modelAndView.addObject("accidents", accidentService.getValidateAccidents());
         return modelAndView;
     }

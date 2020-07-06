@@ -9,15 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 04.07.2020
+ * @version 2.0
+ * @since 07.07.2020
  */
 
 @Controller
@@ -41,20 +38,20 @@ public class LoginController {
             errorMessage = "Неверно указан логин/пароль!";
         }
         if (logout != null) {
-            errorMessage = "Авторизация прошла успешно!";
+            errorMessage = "Вы вышли из системы!";
         }
         model.addAttribute("errorMessage", errorMessage);
         return "login";
     }
 
     /**
-     * Метод формирует результат авторизации
+     * Метод конфигурирует настройки выхода из системы
      * @param request - запрос
      * @param response - ответ
-     * @return - результат успешности авторизации
+     * @return - перевод на страницу аутентификации
      */
 
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping("/logout")
     public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {

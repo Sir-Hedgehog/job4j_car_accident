@@ -7,13 +7,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import javax.sql.DataSource;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 1.0
- * @since 04.07.2020
+ * @version 2.0
+ * @since 07.07.2020
  */
 
 @Configuration
@@ -21,25 +23,34 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    DataSource ds;
+
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     /**
-     * Метод сохраняет логин и пароль конкретных пользователей в память
+     * Метод сохраняет логин и пароль конкретных пользователей в базу данных
      * @param authentication - аутентификация
      */
 
     @Override
-    protected void configure(AuthenticationManagerBuilder authentication) throws Exception {
-        authentication.inMemoryAuthentication()
-                .passwordEncoder(passwordEncoder)
-                .withUser("user").password(passwordEncoder.encode("123456")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder.encode("123456")).roles("USER", "ADMIN");
+    protected final void configure(AuthenticationManagerBuilder authentication) throws Exception {
+        authentication.jdbcAuthentication()
+                .dataSource(ds)
+                .withUser(User.withUsername("user")
+                        .password(passwordEncoder().encode("123456"))
+                        .roles("USER"));
+                /*.usersByUsernameQuery("select username, password, enabled "
+                                                + "from users "
+                                                + "where username = ?")
+                .authoritiesByUsernameQuery("select username, authority "
+                                                + "from authorities "
+                                                + "where username = ?");*/
     }
 
     /**
-     * Метод формирует хранилище паролей
-     * @return - хранилище паролей
+     * Метод формирует кодировку паролей
+     * @return - кодировка паролей
      */
 
     @Bean
@@ -55,23 +66,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/login")
-                .permitAll()
-                .antMatchers("/**")
-                .hasAnyRole("ADMIN", "USER")
+                    .antMatchers("/login")
+                    .permitAll()
+                    .antMatchers("/")
+                    .hasAnyRole("ADMIN", "USER")
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .defaultSuccessUrl("/")
-                .failureUrl("/login?error=true")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/")
+                    .failureUrl("/login?error=true")
+                    .permitAll()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/login?logout=true")
-                .invalidateHttpSession(true)
-                .permitAll()
+                    .logout()
+                    .logoutSuccessUrl("/login?logout=true")
+                    .invalidateHttpSession(true)
+                    .permitAll()
                 .and()
-                .csrf()
-                .disable();
+                    .csrf()
+                    .disable();
     }
 }
