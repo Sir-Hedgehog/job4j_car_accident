@@ -73,7 +73,19 @@
         }
 
         span {
-            color: #d33;
+            color: red;
+            font-size: 0.7em;
+            text-align: right;
+            display: block;
+            font-style: italic;
+        }
+
+        #userError {
+            padding-right: 4.8em;
+        }
+
+        #passwordError {
+            padding-right: 4.2em;
         }
 
         form {
@@ -97,14 +109,14 @@
             margin-top: 1em;
         }
 
+        #lastTd {
+            padding-top: 1em;
+        }
+
         #sendButton {
             background-color: #fff;
             color: #23a843;
             border-color: #23a843;
-            margin-left: 0.2em;
-            margin-right: 0.2em;
-            padding: 0.1em 0.52em 0.32em 0.52em;
-            font-size: 2.8em
         }
 
         #sendButton:hover {
@@ -120,11 +132,8 @@
             font-weight: 300;
         }
 
-        #lastTr {
-            padding-top: 0.5em;
-        }
-
         #buttons {
+            padding-top: 1em;
             margin-bottom: 2em;
         }
 
@@ -142,40 +151,42 @@
             <h1>Фиксация правонарушений</h1>
         </header>
         <section>
-            <form action="#" th:action="@{/login}" name='login' method='POST'>
-                <span th:if="${errorMessage != ''}" th:text="${errorMessage}">Auth error</span>
-                <table cellspacing="0">
+            <!--/*@thymesVar id="user" type="ru.job4j.accidents.model.User"*/-->
+            <form action="#" th:action="@{/registration}" name='registration' method='POST' th:object="${user}">
+                <table>
                     <caption>
-                        Аутентификация
+                        Регистрация
                     </caption>
-                    <tbody>
-                        <tr>
-                            <td class="text">
-                                <label for="login">Логин: </label>
-                            </td>
-                            <td>
-                                <input type="text" name="username" class="form-control" id="login"/>
-                            </td>
-                            <td rowspan="2" id="buttons">
-                                <input id="sendButton" type="submit" name="save" class="btn btn-outline-dark" value="&rarr;"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="text">
-                                <label for="password">Пароль: </label>
-                            </td>
-                            <td>
-                                <input type="password" name="password" class="form-control" id="password"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3" id="lastTr">
-                                <a href="#" th:href="@{/registration}" title='Регистрация'>Регистрация</a>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tr>
+                        <td class="text">
+                            <label for="username">Введите логин: </label>
+                        </td>
+                        <td>
+                            <input th:field="*{username}" type='text' name='username' id="username" class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <span id="userError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text">
+                            <label for="password">Введите пароль: </label>
+                        </td>
+                        <td>
+                            <input th:field="*{password}" type='password' name='password' id="password" class="form-control"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan='2'>
+                            <span id="passwordError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</span>
+                        </td>
+                    </tr>
+                    <tr id="buttons">
+                        <td id="lastTd" colspan='2'><input id="sendButton" class="btn btn-outline-dark" name="submit" type="submit" value="Сохранить"/></td>
+                    </tr>
                 </table>
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             </form>
         </section>
         <footer>

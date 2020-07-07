@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
+ * @version 3.0
  * @since 07.07.2020
  */
 
@@ -24,21 +24,16 @@ public class LoginController {
     /**
      * Метод получает результат проверки на аутентификацию/авторизацию
      * @param error - успешность аутентификации
-     * @param logout - успешность авторизации
      * @param model - модель с результатом проверки на аутентификацию/авторизацию для фронта
      * @return - перевод на страницу аутентификации/авторизации
      */
 
     @GetMapping("/login")
     public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            @RequestParam(value = "logout", required = false) String logout,
                             Model model) {
         String errorMessage = null;
         if (error != null) {
             errorMessage = "Неверно указан логин/пароль!";
-        }
-        if (logout != null) {
-            errorMessage = "Вы вышли из системы!";
         }
         model.addAttribute("errorMessage", errorMessage);
         return "login";

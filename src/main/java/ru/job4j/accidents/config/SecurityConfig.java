@@ -7,14 +7,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 /**
  * @author Sir-Hedgehog (mailto:quaresma_08@mail.ru)
- * @version 2.0
+ * @version 3.0
  * @since 07.07.2020
  */
 
@@ -37,15 +36,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected final void configure(AuthenticationManagerBuilder authentication) throws Exception {
         authentication.jdbcAuthentication()
                 .dataSource(ds)
-                .withUser(User.withUsername("user")
-                        .password(passwordEncoder().encode("123456"))
-                        .roles("USER"));
-                /*.usersByUsernameQuery("select username, password, enabled "
+                .usersByUsernameQuery("select username, password, enabled "
                                                 + "from users "
                                                 + "where username = ?")
-                .authoritiesByUsernameQuery("select username, authority "
-                                                + "from authorities "
-                                                + "where username = ?");*/
+                .authoritiesByUsernameQuery("select u.username, a.authority "
+                                                + "from authorities as a, users as u "
+                                                + "where u.username = ? and u.authority_id = a.id");
     }
 
     /**
@@ -66,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                    .antMatchers("/login")
+                    .antMatchers("/login, /registration")
                     .permitAll()
                     .antMatchers("/")
                     .hasAnyRole("ADMIN", "USER")

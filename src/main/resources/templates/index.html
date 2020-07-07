@@ -146,16 +146,13 @@
             <div class="row pt-2" id="blockOfHeader">
                 <h1 id="header">Список заявок по ДТП</h1>
             </div>
+            <!--/*@thymesVar id="user" type="ru.job4j.accidents.model.User"*/-->
             <nav>
                 <ul>
                     <li id="login"><p id="pLogin">Пользователь: <span id="currentLogin" th:text="${user.username}"></span></p></li>
                     <li id="logout"><a id="aLogout" href="#" th:href="@{/logout}" title='Выход'>Выход</a></li>
                 </ul>
             </nav>
-            <!-- <form id="logout" th:action="@{/logout}" method="GET"> -->
-
-                <!-- <input type="submit" value="Выход"> -->
-            <!-- </form> -->
             <section>
                 <table class="table table-bordered">
                     <tr>
