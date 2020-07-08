@@ -165,7 +165,7 @@
                     <tr th:each="accident : ${accidents}">
                         <td class="data" th:text="${accident.value.name}"></td>
                         <td class="data" th:text="${accident.value.type.name}"></td>
-                        <td class="data">
+                        <td width="200" class="data">
                             <p th:each="rule : ${accident.value.rules}" th:text="${rule.name}"></p>
                         </td>
                         <td class="data" th:text="${accident.value.text}"></td>
