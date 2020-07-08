@@ -8,7 +8,9 @@ This webapp realizes car accident area with using of principle of MVC (model-vie
 ![MVC](https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/spring-mvc-intro/images/high-level.png)
 
 ## Use cases
-This app can be pushed and used with any development environment that supports Java (IntellijIDEA, Eclipse, others).
+1) This app can be pushed and used with any development environment that supports Java (IntellijIDEA, Eclipse, others).
+
+2) Follow the link [Auto accident](https://autoaccident.herokuapp.com "autoaccident") and enjoy to use app!
 
 ## Steps of work
 After you pushed webapp, you can use it. Steps of work are next:
