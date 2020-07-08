@@ -35,7 +35,7 @@ V. Update your ad of accident.
 
 VI. Logout.
 
-![Logout](https://github.com/Sir-Hedgehog/job4j_car_accident/blob/master/src/main/resources/screenshots/logout.PNG)
+![Logout](https://github.com/Sir-Hedgehog/job4j_car_accident/blob/master/src/main/resources/screenshots/logout.png)
 
 ## Used technologies
 * Java Core;
