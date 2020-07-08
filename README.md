@@ -42,6 +42,7 @@ VI. Logout.
 * Slf4j;
 * PostgreSQL;
 * Lombok;
+* Commons-dbcp2;
 * Servlet;
 * Spring MVC;
 * Spring Security;
