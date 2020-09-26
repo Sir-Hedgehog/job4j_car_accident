@@ -46,14 +46,22 @@ VI. Logout.
 * Lombok;
 * Commons-dbcp2;
 * Servlet;
-* Spring MVC;
-* Spring Security;
-* Spring Boot;
 * JDBC;
 * Hibernate;
-* Spring Data;
+* Spring Web MVC;
+* Spring Config;
+* Spring Beans;
+* Spring JPA;
+* Spring JDBC;
+* Spring Security;
+* Spring Context;
+* Spring Security;
+* Spring Boot Validation;
+* Spring Boot Logging;
+* Spring Boot Tomcat;
+* Spring Boot Thymeleaf;
+* Spring Boot Web;
 * HTML;
-* Thymeleaf;
 * CSS;
 * Bootstrap;
 
