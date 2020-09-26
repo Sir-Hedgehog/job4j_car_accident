@@ -29,8 +29,7 @@ public class LoginController {
      */
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "error", required = false) String error,
-                            Model model) {
+    public String loginPage(@RequestParam(value = "error", required = false) String error, Model model) {
         String errorMessage = null;
         if (error != null) {
             errorMessage = "Неверно указан логин/пароль!";

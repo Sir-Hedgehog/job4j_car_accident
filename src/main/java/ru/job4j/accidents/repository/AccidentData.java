@@ -20,6 +20,7 @@ public interface AccidentData extends CrudRepository<Accident, Integer> {
      * Метод задает конкретную коллекцию, в которой будут храниться правонарушения
      * @return - коллекция
      */
+
     List<Accident> findAll();
 
     /**
