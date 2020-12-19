@@ -17,8 +17,8 @@ import java.util.Set;
 
 @Entity(name = "Accident")
 @Table(name = "accident")
-@EqualsAndHashCode(exclude = "type, rules")
-@ToString(exclude = "type, rules")
+@EqualsAndHashCode
+@ToString
 public class Accident {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,10 +41,14 @@ public class Accident {
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "accident_type_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private AccidentType type;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "accident_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Rule> rules;
 
     public int getId() {

@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Sir-Hedgehog/job4j_car_accident.svg?branch=master)](https://travis-ci.org/Sir-Hedgehog/job4j_car_accident)
+[![Build Status](https://travis-ci.com/Sir-Hedgehog/job4j_car_accident.svg?branch=master)](https://travis-ci.org/Sir-Hedgehog/job4j_car_accident)
 
 # Web application job4j_car_accident
 
